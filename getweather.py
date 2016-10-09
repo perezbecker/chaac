@@ -22,9 +22,9 @@ pwm = Adafruit_PCA9685.PCA9685()
 pwm.set_pwm_freq(60)
 
 def normalize(variable,minvalue,maxvalue):
-    normvar=int((variable-minvalue)/(maxvalue-minvalue)*4096.)
-    if(normvar > 4096):
-        normvar = 4096
+    normvar=int((variable-minvalue)/(maxvalue-minvalue)*4095.)
+    if(normvar > 4095):
+        normvar = 4095
     if(normvar < 0):
         normvar = 0
     return normvar
@@ -58,11 +58,11 @@ while True:
     normPrecipProbability=normalize(precipProbability,precipProbabilityRange[0],precipProbabilityRange[1])
     
     print "Updating:", str(datetime.now()) 
-    print "Temperature", temperature, normTemperature, float(normTemperature)*5./4096.
-    print "Pressure", pressure, normPressure, float(normPressure)*5./4096.
-    print "Humidity", humidity, normHumidity, float(normHumidity)*5./4096.
-    print "WindSpeed", windSpeed, normWindSpeed, float(normWindSpeed)*5./4096.
-    print "PrecipProbability", precipProbability, normPrecipProbability, float(normPrecipProbability)*5./4096.
+    print "Temperature", temperature, normTemperature, float(normTemperature)*5./4095.
+    print "Pressure", pressure, normPressure, float(normPressure)*5./4095.
+    print "Humidity", humidity, normHumidity, float(normHumidity)*5./4095.
+    print "WindSpeed", windSpeed, normWindSpeed, float(normWindSpeed)*5./4095.
+    print "PrecipProbability", precipProbability, normPrecipProbability, float(normPrecipProbability)*5./4095.
 
     pwm.set_pwm(0, 0, normTemperature)
     pwm.set_pwm(1, 0, normPressure)
