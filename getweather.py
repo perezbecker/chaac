@@ -40,7 +40,7 @@ except URLError, e:
 
  
 weatherdata = json.loads(currentweather)
-pprint(weatherdata)
+#pprint(weatherdata)
 temperature = (weatherdata["currently"]["temperature"] - 32.)*5./9. #in degrees C
 pressure = weatherdata["currently"]["pressure"] # in millibar
 humidity = weatherdata["currently"]["humidity"] # in percentage
@@ -54,13 +54,18 @@ normHumidity=normalize(humidity,humidityRange[0],humidityRange[1])
 normWindSpeed=normalize(windSpeed,windSpeedRange[0],windSpeedRange[1])
 normPrecipProbability=normalize(precipProbability,precipProbabilityRange[0],precipProbabilityRange[1])
 
-while True:
-    pwm.set_pwm(0, 0, normTemperature)
-    pwm.set_pwm(1, 0, normPressure)
-    pwm.set_pwm(2, 0, normHumidity)
-    pwm.set_pwm(3, 0, normWindSpeed)
-    pwm.set_pwm(4, 0, normPrecipProbability)
-    time.sleep(20)
+print "Temperature", temperature, normTemperature, float(normTemperature)*5./4096.
+print "Pressure", pressure, normPressure, float(normPressure)*5./4096.
+print "Humidity", humidity, normHumidity, float(normHumidity)*5./4096.
+print "WindSpeed", windSpeed, normwindSpeed, float(normWindSpeed)*5./4096.
+print "PrecipProbability", precipProbability, normPrecipProbability, float(normPrecipProbability)*5./4096.
+
+pwm.set_pwm(0, 0, normTemperature)
+pwm.set_pwm(1, 0, normPressure)
+pwm.set_pwm(2, 0, normHumidity)
+pwm.set_pwm(3, 0, normWindSpeed)
+pwm.set_pwm(4, 0, normPrecipProbability)
+time.sleep(20)
     
 
 
