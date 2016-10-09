@@ -1,8 +1,9 @@
 from __future__ import division
 import time
+from datetime import datetime
 from urllib2 import Request, urlopen, URLError
 import json
-from pprint import pprint
+# from pprint import pprint
 
 # Import the PCA9685 module.
 import Adafruit_PCA9685
@@ -55,12 +56,13 @@ while True:
     normHumidity=normalize(humidity,humidityRange[0],humidityRange[1])
     normWindSpeed=normalize(windSpeed,windSpeedRange[0],windSpeedRange[1])
     normPrecipProbability=normalize(precipProbability,precipProbabilityRange[0],precipProbabilityRange[1])
-
-    # print "Temperature", temperature, normTemperature, float(normTemperature)*5./4096.
-    # print "Pressure", pressure, normPressure, float(normPressure)*5./4096.
-    # print "Humidity", humidity, normHumidity, float(normHumidity)*5./4096.
-    # print "WindSpeed", windSpeed, normWindSpeed, float(normWindSpeed)*5./4096.
-    # print "PrecipProbability", precipProbability, normPrecipProbability, float(normPrecipProbability)*5./4096.
+    
+    print "Updating:", str(datetime.now()) 
+    print "Temperature", temperature, normTemperature, float(normTemperature)*5./4096.
+    print "Pressure", pressure, normPressure, float(normPressure)*5./4096.
+    print "Humidity", humidity, normHumidity, float(normHumidity)*5./4096.
+    print "WindSpeed", windSpeed, normWindSpeed, float(normWindSpeed)*5./4096.
+    print "PrecipProbability", precipProbability, normPrecipProbability, float(normPrecipProbability)*5./4096.
 
     pwm.set_pwm(0, 0, normTemperature)
     pwm.set_pwm(1, 0, normPressure)
