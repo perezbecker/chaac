@@ -3,11 +3,15 @@ import time
 from datetime import datetime
 from urllib2 import Request, urlopen, URLError
 import json
+import auth as au
 # from pprint import pprint
 
 # Import the PCA9685 module.
 import Adafruit_PCA9685
 
+secret = au.secret
+lat = str(au.lat)
+lon = str(au.lon)
 
 temperatureRange = [-15.,35.]
 pressureRange=[960.,1060.]
@@ -31,7 +35,7 @@ def normalize(variable,minvalue,maxvalue):
 
 while True:
 
-    request = Request('https://api.darksky.net/forecast/ab148019f9563243649fab9e7193e470/42.3601,-71.0942')
+    request = Request('https://api.darksky.net/forecast/'+secret+'/'+lat+','+lon)
 
     try:
       response = urlopen(request)
@@ -63,6 +67,7 @@ while True:
     print "Humidity", humidity, normHumidity, float(normHumidity)*5./4095.
     print "WindSpeed", windSpeed, normWindSpeed, float(normWindSpeed)*5./4095.
     print "PrecipProbability", precipProbability, normPrecipProbability, float(normPrecipProbability)*5./4095.
+    print "* * *" 
 
     pwm.set_pwm(0, 0, normTemperature)
     pwm.set_pwm(1, 0, normPressure)
