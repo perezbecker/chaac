@@ -57,7 +57,7 @@ normPrecipProbability=normalize(precipProbability,precipProbabilityRange[0],prec
 print "Temperature", temperature, normTemperature, float(normTemperature)*5./4096.
 print "Pressure", pressure, normPressure, float(normPressure)*5./4096.
 print "Humidity", humidity, normHumidity, float(normHumidity)*5./4096.
-print "WindSpeed", windSpeed, normwindSpeed, float(normWindSpeed)*5./4096.
+print "WindSpeed", windSpeed, normWindSpeed, float(normWindSpeed)*5./4096.
 print "PrecipProbability", precipProbability, normPrecipProbability, float(normPrecipProbability)*5./4096.
 
 pwm.set_pwm(0, 0, normTemperature)
