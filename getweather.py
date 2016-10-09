@@ -28,44 +28,46 @@ def normalize(variable,minvalue,maxvalue):
         normvar = 0
     return normvar
 
-request = Request('https://api.darksky.net/forecast/ab148019f9563243649fab9e7193e470/42.3601,-71.0942')
+while True:
 
-try:
-	response = urlopen(request)
-	currentweather = response.read()
-    # print currentweather
-except URLError, e:
-    print 'No Weather. Got an error code:', e
+    request = Request('https://api.darksky.net/forecast/ab148019f9563243649fab9e7193e470/42.3601,-71.0942')
+
+    try:
+      response = urlopen(request)
+      currentweather = response.read()
+        # print currentweather
+    except URLError, e:
+        print 'No Weather. Got an error code:', e
     
 
  
-weatherdata = json.loads(currentweather)
-#pprint(weatherdata)
-temperature = (weatherdata["currently"]["temperature"] - 32.)*5./9. #in degrees C
-pressure = weatherdata["currently"]["pressure"] # in millibar
-humidity = weatherdata["currently"]["humidity"] # in percentage
-windSpeed = weatherdata["currently"]["windSpeed"]*1.151 # in knots
-precipProbability = weatherdata["currently"]["precipProbability"] # in percentage
+    weatherdata = json.loads(currentweather)
+    #pprint(weatherdata)
+    temperature = (weatherdata["currently"]["temperature"] - 32.)*5./9. #in degrees C
+    pressure = weatherdata["currently"]["pressure"] # in millibar
+    humidity = weatherdata["currently"]["humidity"] # in percentage
+    windSpeed = weatherdata["currently"]["windSpeed"]*1.151 # in knots
+    precipProbability = weatherdata["currently"]["precipProbability"] # in percentage
 
 
-normTemperature=normalize(temperature,temperatureRange[0],temperatureRange[1])
-normPressure=normalize(pressure,pressureRange[0],pressureRange[1])
-normHumidity=normalize(humidity,humidityRange[0],humidityRange[1])
-normWindSpeed=normalize(windSpeed,windSpeedRange[0],windSpeedRange[1])
-normPrecipProbability=normalize(precipProbability,precipProbabilityRange[0],precipProbabilityRange[1])
+    normTemperature=normalize(temperature,temperatureRange[0],temperatureRange[1])
+    normPressure=normalize(pressure,pressureRange[0],pressureRange[1])
+    normHumidity=normalize(humidity,humidityRange[0],humidityRange[1])
+    normWindSpeed=normalize(windSpeed,windSpeedRange[0],windSpeedRange[1])
+    normPrecipProbability=normalize(precipProbability,precipProbabilityRange[0],precipProbabilityRange[1])
 
-print "Temperature", temperature, normTemperature, float(normTemperature)*5./4096.
-print "Pressure", pressure, normPressure, float(normPressure)*5./4096.
-print "Humidity", humidity, normHumidity, float(normHumidity)*5./4096.
-print "WindSpeed", windSpeed, normWindSpeed, float(normWindSpeed)*5./4096.
-print "PrecipProbability", precipProbability, normPrecipProbability, float(normPrecipProbability)*5./4096.
+    # print "Temperature", temperature, normTemperature, float(normTemperature)*5./4096.
+    # print "Pressure", pressure, normPressure, float(normPressure)*5./4096.
+    # print "Humidity", humidity, normHumidity, float(normHumidity)*5./4096.
+    # print "WindSpeed", windSpeed, normWindSpeed, float(normWindSpeed)*5./4096.
+    # print "PrecipProbability", precipProbability, normPrecipProbability, float(normPrecipProbability)*5./4096.
 
-pwm.set_pwm(0, 0, normTemperature)
-pwm.set_pwm(1, 0, normPressure)
-pwm.set_pwm(2, 0, normHumidity)
-pwm.set_pwm(3, 0, normWindSpeed)
-pwm.set_pwm(4, 0, normPrecipProbability)
-time.sleep(20)
+    pwm.set_pwm(0, 0, normTemperature)
+    pwm.set_pwm(1, 0, normPressure)
+    pwm.set_pwm(2, 0, normHumidity)
+    pwm.set_pwm(3, 0, normWindSpeed)
+    pwm.set_pwm(4, 0, normPrecipProbability)
+    time.sleep(180)
     
 
 
